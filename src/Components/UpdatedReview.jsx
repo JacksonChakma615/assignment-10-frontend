@@ -19,7 +19,7 @@ const UpdatedReview = () => {
     userName,
   } = review;
 
-  const handleUpdateProperty = (e) => {
+  const handleUpdateProperty = async (e) => {
     e.preventDefault();
     const form = e.target;
 
@@ -27,32 +27,38 @@ const UpdatedReview = () => {
       propertyName: form.propertyName.value,
       description: form.description.value,
       category: form.category.value,
-      price: form.price.value,
+      price: Number(form.price.value),
       location: form.location.value,
       image: form.image.value,
       userEmail: user?.email || userEmail,
       userName: user?.displayName || userName,
     };
 
-    fetch(`http://localhost:5000/myProperties/${_id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedProperty),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          Swal.fire({
-            title: "Success!",
-            text: "Property updated successfully!",
-            icon: "success",
-            confirmButtonText: "Cool",
-          });
-        }
-      })
-      .catch(() =>
-        Swal.fire("Error!", "Something went wrong. Try again.", "error")
-      );
+    try {
+      const response = await fetch(`http://localhost:5000/allProperties/${_id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedProperty),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.modifiedCount > 0 || data.matchedCount > 0)) {
+        Swal.fire({
+          title: "Success!",
+          text: "Property updated successfully!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      } else if (response.ok && data.matchedCount === 0) {
+        Swal.fire("Error!", "Property not found or no changes made.", "error");
+      } else {
+        Swal.fire("Error!", data.error || "Something went wrong!", "error");
+      }
+    } catch (err) {
+      Swal.fire("Error!", "Server error. Try again later.", "error");
+      console.error(err);
+    }
   };
 
   return (
@@ -64,10 +70,6 @@ const UpdatedReview = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center my-5 text-white">
           Update Property
         </h2>
-        <p className="text-center text-sm md:text-base lg:text-lg md:w-8/12 lg:w-8/12 mx-auto mb-10 text-white">
-          Update the property details below. Make sure the information is accurate
-          and up-to-date.
-        </p>
 
         <div className="backdrop-blur-sm rounded-lg bg-gray-800 bg-opacity-50 p-6 sm:p-8 md:p-12">
           <form
@@ -77,33 +79,24 @@ const UpdatedReview = () => {
             {/* Property Name & Image */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    Property Name
-                  </span>
-                </label>
+                <label className="label">Property Name</label>
                 <input
                   type="text"
                   name="propertyName"
                   defaultValue={propertyName}
                   placeholder="Enter property name"
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                   required
                 />
               </div>
-
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    Image Link
-                  </span>
-                </label>
+                <label className="label">Image URL</label>
                 <input
                   type="text"
                   name="image"
                   defaultValue={image}
                   placeholder="Enter image URL"
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                   required
                 />
               </div>
@@ -112,15 +105,11 @@ const UpdatedReview = () => {
             {/* Category & Price */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    Category
-                  </span>
-                </label>
+                <label className="label">Category</label>
                 <select
                   name="category"
                   defaultValue={category}
-                  className="bg-gray-900 text-gray-200 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                   required
                 >
                   <option value="">Select Category</option>
@@ -130,19 +119,14 @@ const UpdatedReview = () => {
                   <option value="Land">Land</option>
                 </select>
               </div>
-
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    Price ($)
-                  </span>
-                </label>
+                <label className="label">Price ($)</label>
                 <input
                   type="number"
                   name="price"
                   defaultValue={price}
                   placeholder="Enter price"
-                  className="bg-gray-900 text-gray-200 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                   required
                 />
               </div>
@@ -150,73 +134,51 @@ const UpdatedReview = () => {
 
             {/* Location */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-white">
-                  Location
-                </span>
-              </label>
+              <label className="label">Location</label>
               <input
                 type="text"
                 name="location"
                 defaultValue={location}
-                placeholder="Enter city, area, or address"
-                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                placeholder="Enter location"
+                className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                 required
               />
             </div>
 
             {/* Description */}
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-semibold text-white">
-                  Description
-                </span>
-              </label>
+              <label className="label">Description</label>
               <textarea
                 name="description"
                 defaultValue={description}
                 rows="5"
-                placeholder="Write about the property..."
-                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                placeholder="Enter description"
+                className="bg-gray-900 text-gray-200 w-full p-3 rounded"
                 required
               ></textarea>
             </div>
 
-            {/* User Info (Read-only) */}
+            {/* User Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    User Name
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  value={user?.displayName || userName || ""}
-                  readOnly
-                  className="bg-gray-700 text-gray-300 w-full p-3 rounded"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-white">
-                    User Email
-                  </span>
-                </label>
-                <input
-                  type="email"
-                  value={user?.email || userEmail || ""}
-                  readOnly
-                  className="bg-gray-700 text-gray-300 w-full p-3 rounded"
-                />
-              </div>
+              <input
+                type="text"
+                value={user?.displayName || userName || ""}
+                readOnly
+                className="bg-gray-700 text-gray-300 w-full p-3 rounded"
+              />
+              <input
+                type="email"
+                value={user?.email || userEmail || ""}
+                readOnly
+                className="bg-gray-700 text-gray-300 w-full p-3 rounded"
+              />
             </div>
 
-            {/* Submit Button */}
+            {/* Submit */}
             <input
               type="submit"
               value="Update Property"
-              className="btn bg-[#D12F42] hover:bg-gray-900 text-white w-full px-6 py-3 rounded-lg my-4"
+              className="bg-[#D12F42] text-white w-full px-6 py-3 rounded-lg cursor-pointer"
             />
           </form>
         </div>
