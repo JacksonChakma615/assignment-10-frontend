@@ -11,7 +11,7 @@ const Footer = () => {
               <p className="text-sm">
                 Discover, browse, and secure your perfect home effortlessly.
                 HomeNest connects property owners and seekers, making real
-                estate simple, transparent and reliable 
+                estate simple, transparent, and reliable,
               </p>
             </div>
 
