@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Swal from "sweetalert2";
-import banner from "../assets/AddMy.jpeg";
+import banner from "../assets/add.jpg";
 import { AuthContex } from "../Router/AuthProvider";
 
 const AddProperties = () => {
