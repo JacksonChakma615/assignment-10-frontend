@@ -9,9 +9,9 @@ const Footer = () => {
             <div>
               <h2 className="text-xl font-bold text-white mb-4">EstateWise</h2>
               <p className="text-sm">
-                Discover, browse, and secure your perfect home effortlessly.
+                Discover, browse, an d secure your perfect home effortlessly.
                 HomeNest connects property owners and seekers, making real
-                estate simple, transparent, and reliable,,
+                estate simple, transparent, and reliable 
               </p>
             </div>
 
