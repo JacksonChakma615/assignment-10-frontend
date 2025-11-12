@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-import banner from "../assets/AddMy.jpeg";
+import banner from "../assets/banner.avif";
 import { AuthContex } from "../Router/AuthProvider";
 
 const UpdatedReview = () => {
