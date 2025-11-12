@@ -3,171 +3,219 @@ import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import banner from "../assets/AddMy.jpeg";
 import { AuthContex } from "../Router/AuthProvider";
+
 const UpdatedReview = () => {
   const { user } = useContext(AuthContex);
   const review = useLoaderData() || {};
-  const { _id, photo, name, description, rating, year, genres } = review;
-  // console.log(name);
-  const handleUpdateReview = (e) => {
+  const {
+    _id,
+    propertyName,
+    description,
+    category,
+    price,
+    location,
+    image,
+    userEmail,
+    userName,
+  } = review;
+
+  const handleUpdateProperty = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const email = user.email;
-    const photo = form.photo.value;
-    const rating = form.rating.value;
-    const year = form.year.value;
-    const genres = form.genres.value;
-    const description = form.description.value;
-    const addReview = { name, photo, rating, year, description, email, genres };
-    // console.log(addReview);
 
-    // send data to the server
+    const updatedProperty = {
+      propertyName: form.propertyName.value,
+      description: form.description.value,
+      category: form.category.value,
+      price: form.price.value,
+      location: form.location.value,
+      image: form.image.value,
+      userEmail: user?.email || userEmail,
+      userName: user?.displayName || userName,
+    };
+
     fetch(`http://localhost:5000/myProperties/${_id}`, {
       method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(addReview),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedProperty),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount > 0) {
           Swal.fire({
-            title: "success",
-            text: "Updated Review Scuccessfully",
+            title: "Success!",
+            text: "Property updated successfully!",
             icon: "success",
             confirmButtonText: "Cool",
           });
         }
-      });
+      })
+      .catch(() =>
+        Swal.fire("Error!", "Something went wrong. Try again.", "error")
+      );
   };
 
   return (
-    <div>
+    <div className="mt-20">
       <div
         className="bg-cover bg-center p-4 sm:p-8 md:p-12 lg:p-24"
-        style={{ backgroundImage: `url(${banner})` }}>
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center my-5 text-white">
-          {name}
+        style={{ backgroundImage: `url(${banner})` }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-center my-5 text-white">
+          Update Property
         </h2>
-        <p className="text-center text-sm md:text-base lg:text-lg md:w-8/12 lg:w-7/12 mx-auto mb-10 text-white">
-          This form allows you to update an existing review that you have
-          submitted previously. You can modify your review to reflect changes in
-          your experience or provide more detailed feedback. Please ensure that
-          the information you submit is accurate and helpful.
+        <p className="text-center text-sm md:text-base lg:text-lg md:w-8/12 lg:w-8/12 mx-auto mb-10 text-white">
+          Update the property details below. Make sure the information is accurate
+          and up-to-date.
         </p>
 
         <div className="backdrop-blur-sm rounded-lg bg-gray-800 bg-opacity-50 p-6 sm:p-8 md:p-12">
           <form
-            onSubmit={handleUpdateReview}
-            className="w-full max-w-screen-lg mx-auto space-y-6">
+            onSubmit={handleUpdateProperty}
+            className="w-full max-w-screen-lg mx-auto space-y-6"
+          >
+            {/* Property Name & Image */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text font-semibold text-white">
-                    Game Title
+                    Property Name
                   </span>
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  defaultValue={name}
-                  placeholder="Enter your Game Title"
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="propertyName"
+                  defaultValue={propertyName}
+                  placeholder="Enter property name"
+                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text font-semibold text-white">
-                    Photo URL: Use imgbb
+                    Image Link
                   </span>
                 </label>
                 <input
                   type="text"
-                  name="photo"
-                  defaultValue={photo}
-                  placeholder="Enter photo URL"
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                  name="image"
+                  defaultValue={image}
+                  placeholder="Enter image URL"
+                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
             </div>
 
+            {/* Category & Price */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
-                <label htmlFor="rating">
+                <label className="label">
                   <span className="label-text font-semibold text-white">
-                    Rating (1-10):
+                    Category
                   </span>
                 </label>
-                <input
-                  type="number"
-                  id="rating"
-                  name="rating"
-                  defaultValue={rating}
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                  min="1"
-                  max="10"
-                  placeholder="Enter rating (1-10)"
+                <select
+                  name="category"
+                  defaultValue={category}
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
                   required
-                />
+                >
+                  <option value="">Select Category</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Sale">Sale</option>
+                  <option value="Commercial">Commercial</option>
+                  <option value="Land">Land</option>
+                </select>
               </div>
+
               <div className="form-control">
-                <label htmlFor="year">
+                <label className="label">
                   <span className="label-text font-semibold text-white">
-                    Publish Year:
+                    Price ($)
                   </span>
                 </label>
                 <input
                   type="number"
-                  id="year"
-                  name="year"
-                  defaultValue={year}
-                  className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                  min="2000"
-                  placeholder="Enter publishing year"
+                  name="price"
+                  defaultValue={price}
+                  placeholder="Enter price"
+                  className="bg-gray-900 text-gray-200 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
             </div>
 
-            <div class="flex flex-col w-full">
-              <label>
+            {/* Location */}
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text font-semibold text-white">
-                  Select a Genre:
+                  Location
                 </span>
               </label>
-              <select
-                name="genres"
-                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-8/12 md:w-1/2 p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
-                <option value="action">Action</option>
-                <option value="rpg">RPG</option>
-                <option value="adventure">Adventure</option>
-                <option value="sports">Sports</option>
-              </select>
+              <input
+                type="text"
+                name="location"
+                defaultValue={location}
+                placeholder="Enter city, area, or address"
+                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                required
+              />
             </div>
 
+            {/* Description */}
             <div className="form-control">
-              <label htmlFor="description">
+              <label className="label">
                 <span className="label-text font-semibold text-white">
-                  Review Description:
+                  Description
                 </span>
               </label>
               <textarea
-                id="description"
-                defaultValue={description}
                 name="description"
-                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Write your game review here..."
+                defaultValue={description}
                 rows="5"
-                required></textarea>
+                placeholder="Write about the property..."
+                className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
+                required
+              ></textarea>
             </div>
 
+            {/* User Info (Read-only) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text font-semibold text-white">
+                    User Name
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  value={user?.displayName || userName || ""}
+                  readOnly
+                  className="bg-gray-700 text-gray-300 w-full p-3 rounded"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text font-semibold text-white">
+                    User Email
+                  </span>
+                </label>
+                <input
+                  type="email"
+                  value={user?.email || userEmail || ""}
+                  readOnly
+                  className="bg-gray-700 text-gray-300 w-full p-3 rounded"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <input
               type="submit"
-              value="Submit"
+              value="Update Property"
               className="btn bg-[#D12F42] hover:bg-gray-900 text-white w-full px-6 py-3 rounded-lg my-4"
             />
           </form>

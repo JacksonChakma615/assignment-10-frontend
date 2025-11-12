@@ -6,7 +6,7 @@ import { AuthContex } from "../Router/AuthProvider";
 
 const HomeCard = ({ review }) => {
   const { user } = useContext(AuthContex);
-  const { photo, name, description, rating, genres } = review;
+  const { image, name, description, rating, genres } = review;
 
   const handleAddWishList = (review) => {
     fetch("http://localhost:5000/myRating", {
@@ -17,7 +17,7 @@ const HomeCard = ({ review }) => {
       body: JSON.stringify({
         name: review.name,
         description: review.description,
-        photo: review.photo,
+        image: review.image,
         rating: review.rating,
         genres: review.genres,
         email: user.email,
@@ -42,7 +42,7 @@ const HomeCard = ({ review }) => {
       <div>
         {/* Image with proper cover */}
         <img
-          src={photo}
+          src={image}
           alt=""
           className="object-cover w-full h-32 mb-3 rounded-lg dark:bg-gray-500"
         />
@@ -70,25 +70,20 @@ const HomeCard = ({ review }) => {
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="">
         <Link to={`/exploreDetails/${review._id}`}>
           <button
             id="my-anchor-element-id"
-            className="btn btn-sm rounded-full px-4 py-1 bg-gray-900 text-white hover:bg-gray-800 transition duration-300"
+            className="btn btn-sm rounded-xl px-4 py-1 bg-gray-900 text-white hover:bg-gray-800 transition duration-300 w-full"
           >
-          Details
+          See Details
           </button>
         </Link>
         <Tooltip
           anchorSelect="#my-anchor-element-id"
           content="Click the button to see details"
         />
-        <button
-          onClick={() => handleAddWishList(review)}
-          className="btn btn-sm rounded-full px-4 py-1 text-white bg-[#9538E2] hover:bg-[#7b2af7] transition duration-300"
-        >
-          Add to WatchList
-        </button>
+     
       </div>
     </div>
   );

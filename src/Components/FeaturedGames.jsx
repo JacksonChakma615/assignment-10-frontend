@@ -1,48 +1,59 @@
-import React from "react";
-import img1 from "../../src/assets/img1.jpeg"
-import img2 from "../../src/assets/img2.jpeg"
-import img3 from "../../src/assets/img3.jpeg"
+import React from "react"; 
+import img1 from "../../src/assets/img.1.jpg"
+import img2 from "../../src/assets/img2.png"
+import img3 from "../../src/assets/img3.png"
+
 const FeaturedGames = () => {
   return (
-    <div className="px-4 py-10 text-white">
-      <h2 className="text-3xl font-bold text-center mb-8 text-black">Featured Games</h2>
+    <div className="px-4 py-10 bg-gray-100 text-gray-900">
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Featured Homes</h2>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        <div className="max-w-xs p-4 rounded-lg bg-gray-800 shadow-lg">
+        
+        {/* Card 1 */}
+        <div className="max-w-xs rounded-lg shadow-lg overflow-hidden bg-gradient-to-t from-blue-600 to-gray-800 text-white">
           <img
             src={img1}
-            alt="The Witcher 3: Wild Hunt"
-            className="object-cover w-full h-48 mb-4 rounded-lg"
+            alt="Discover Your Dream Home"
+            className="object-cover w-full h-48"
           />
-          <h3 className="text-xl font-semibold mb-2">The Witcher 3: Wild Hunt</h3>
-          <p className="text-sm text-gray-400">
-            Embark on an epic journey with Geralt of Rivia in this open-world RPG. Encounter mythical creatures, magic, and political intrigue in a world that reacts to your choices.
-          </p>
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-2">Discover Your Dream Home</h3>
+            <p className="text-sm text-gray-200">
+              Explore beautiful apartments, cozy houses, and luxurious villas with detailed listings and high-quality images. Find the perfect home that fits your lifestyle.
+            </p>
+          </div>
+        </div>
 
-        </div>
-        <div className="max-w-xs p-4 rounded-lg bg-gray-800 shadow-lg">
+        {/* Card 2 */}
+        <div className="max-w-xs rounded-lg shadow-lg overflow-hidden bg-gradient-to-t from-green-600 to-gray-800 text-white">
           <img
-             src={img2}
-            alt="Cyberpunk 2077"
-            className="object-cover w-full h-48 mb-4 rounded-lg"
+            src={img2}
+            alt="Homes That Match Your Lifestyle"
+            className="object-cover w-full h-48"
           />
-          <h3 className="text-xl font-semibold mb-2">Cyberpunk 2077</h3>
-          <p className="text-sm text-gray-400">
-            Dive into the dystopian world of Night City in this action RPG. Customize your character, take on dangerous jobs, and explore a neon-lit city filled with secrets.
-          </p>
-       
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-2">Homes That Match Your Lifestyle</h3>
+            <p className="text-sm text-gray-200">
+              Browse modern spaces and serene neighborhoods with smart search tools. Connect with verified owners and make your home journey effortless.
+            </p>
+          </div>
         </div>
-        <div className="max-w-xs p-4 rounded-lg bg-gray-800 shadow-lg">
+
+        {/* Card 3 */}
+        <div className="max-w-xs rounded-lg shadow-lg overflow-hidden bg-gradient-to-t from-purple-600 to-gray-800 text-white">
           <img
-              src={img3}
-            alt="Red Dead Redemption 2"
-            className="object-cover w-full h-48 mb-4 rounded-lg"
+            src={img3}
+            alt="Your Perfect Home Awaits"
+            className="object-cover w-full h-48"
           />
-          <h3 className="text-xl font-semibold mb-2">Red Dead Redemption 2</h3>
-          <p className="text-sm text-gray-400">
-            Experience the wild west like never before in this story-driven open-world game. Play as Arthur Morgan, an outlaw trying to survive in a world that’s rapidly changing.
-          </p>
-   
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-2">Your Perfect Home Awaits</h3>
+            <p className="text-sm text-gray-200">
+              Step into elegant homes and unlock the life you’ve always dreamed of. Discover a variety of properties that suit every taste and budget.
+            </p>
+          </div>
         </div>
+
       </div>
     </div>
   );

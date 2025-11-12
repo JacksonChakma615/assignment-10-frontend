@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/updateReview/:id",
+        path: "/updateProperty/:id",
         element: <UpdatedReview></UpdatedReview>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/allProperties/${params.id}`),
