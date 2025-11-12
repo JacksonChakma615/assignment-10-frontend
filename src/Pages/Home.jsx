@@ -10,7 +10,7 @@ const Home = () => {
 
   const sortedReviews = [...reviews]
     .sort((a, b) => b.rating - a.rating)
-    .slice(0, 6);
+    .slice(0, 8);
 
   return (
     <div>
