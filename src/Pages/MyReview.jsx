@@ -8,7 +8,9 @@ const MyReview = () => {
   const [myReview, setMyReview] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/myProperties?email=${user.email}`)
+    fetch(
+      `https://assignment-10-lac-ten.vercel.app/myProperties?email=${user.email}`
+    )
       .then((req) => req.json())
       .then((data) => {
         setMyReview(data);

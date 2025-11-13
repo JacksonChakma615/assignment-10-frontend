@@ -8,7 +8,9 @@ const GameWatchList = () => {
   // Fetch user ratings
   const fetchRatings = () => {
     if (user?.email) {
-      fetch(`http://localhost:5000/myRating?email=${user.email}`)
+      fetch(
+        `https://assignment-10-lac-ten.vercel.app/myRating?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => setRatings(data));
     }
@@ -33,8 +35,7 @@ const GameWatchList = () => {
           {ratings.map((review) => (
             <div
               key={review._id}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 flex flex-col gap-3 transition-transform transform hover:scale-105 duration-200"
-            >
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 flex flex-col gap-3 transition-transform transform hover:scale-105 duration-200">
               <img
                 src={review.image}
                 alt={review.propertyName}
@@ -43,22 +44,28 @@ const GameWatchList = () => {
               <div className="space-y-1">
                 <h3 className="font-semibold text-lg">{review.propertyName}</h3>
                 <p className="text-gray-500 dark:text-gray-300 text-sm">
-                  Reviewed by: <span className="font-medium">{review.email}</span>
+                  Reviewed by:{" "}
+                  <span className="font-medium">{review.email}</span>
                 </p>
 
                 <div className="flex items-center">
                   {Array.from({ length: 5 }, (_, i) => (
                     <span
                       key={i}
-                      className={`text-xl ${i < review.rating ? "text-orange-500" : "text-gray-300"}`}
-                    >
+                      className={`text-xl ${
+                        i < review.rating ? "text-orange-500" : "text-gray-300"
+                      }`}>
                       ★
                     </span>
                   ))}
-                  <span className="ml-2 text-sm text-gray-500">({review.rating}/5)</span>
+                  <span className="ml-2 text-sm text-gray-500">
+                    ({review.rating}/5)
+                  </span>
                 </div>
 
-                <p className="text-gray-700 dark:text-gray-200">{review.reviewText}</p>
+                <p className="text-gray-700 dark:text-gray-200">
+                  {review.reviewText}
+                </p>
                 <p className="text-gray-400 text-sm">
                   {new Date(review.date).toLocaleDateString()}
                 </p>

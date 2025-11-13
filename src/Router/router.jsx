@@ -23,12 +23,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:5000/allProperties"),
+        loader: () =>
+          fetch("https://assignment-10-lac-ten.vercel.app/allProperties"),
       },
       {
         path: "/allProperties",
         element: <AllProperties></AllProperties>,
-        loader: () => fetch("http://localhost:5000/allProperties"),
+        loader: () =>
+          fetch("https://assignment-10-lac-ten.vercel.app/allProperties"),
       },
       {
         path: "/addProperties",
@@ -58,7 +60,9 @@ const router = createBrowserRouter([
         path: "/updateProperty/:id",
         element: <UpdatedReview></UpdatedReview>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allProperties/${params.id}`),
+          fetch(
+            `https://assignment-10-lac-ten.vercel.app/allProperties/${params.id}`
+          ),
       },
 
       {
@@ -69,7 +73,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allProperties/${params.id}`),
+          fetch(
+            `https://assignment-10-lac-ten.vercel.app/allProperties/${params.id}`
+          ),
       },
       {
         path: "/login",

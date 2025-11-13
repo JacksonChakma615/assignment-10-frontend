@@ -12,7 +12,9 @@ const MyProperties = () => {
   const fetchMyProperties = async () => {
     if (!user?.email) return;
     try {
-      const res = await fetch(`http://localhost:5000/myProperties?email=${user.email}`);
+      const res = await fetch(
+        `https://assignment-10-lac-ten.vercel.app/myProperties?email=${user.email}`
+      );
       const data = await res.json();
       setMyProperties(data);
     } catch (error) {
@@ -36,13 +38,17 @@ const MyProperties = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/myProperties/${_id}`, { method: "DELETE" })
+        fetch(`https://assignment-10-lac-ten.vercel.app/myProperties/${_id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then(() => {
             Swal.fire("Deleted!", "Property has been deleted.", "success");
             setMyProperties(myProperties.filter((prop) => prop._id !== _id));
           })
-          .catch(() => Swal.fire("Error!", "Failed to delete property.", "error"));
+          .catch(() =>
+            Swal.fire("Error!", "Failed to delete property.", "error")
+          );
       }
     });
   };
@@ -64,8 +70,7 @@ const MyProperties = () => {
       {myProperties.map((prop) => (
         <div
           key={prop._id}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col gap-3 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300"
-        >
+          className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col gap-3 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300">
           {/* Image */}
           <img
             src={prop.image}
@@ -102,8 +107,7 @@ const MyProperties = () => {
 
             <button
               onClick={() => handleDelete(prop._id)}
-              className="btn btn-sm bg-red-600 hover:bg-red-700 text-white rounded px-3 py-1 transition-colors duration-200"
-            >
+              className="btn btn-sm bg-red-600 hover:bg-red-700 text-white rounded px-3 py-1 transition-colors duration-200">
               Delete
             </button>
 

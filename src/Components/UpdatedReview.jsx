@@ -35,11 +35,14 @@ const UpdatedReview = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/allProperties/${_id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedProperty),
-      });
+      const response = await fetch(
+        `https://assignment-10-lac-ten.vercel.app/allProperties/${_id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedProperty),
+        }
+      );
 
       const data = await response.json();
 
@@ -65,8 +68,7 @@ const UpdatedReview = () => {
     <div className="mt-20">
       <div
         className="bg-cover bg-center p-4 sm:p-8 md:p-12 lg:p-24"
-        style={{ backgroundImage: `url(${banner})` }}
-      >
+        style={{ backgroundImage: `url(${banner})` }}>
         <h2 className="text-3xl md:text-4xl font-bold text-center my-5 text-white">
           Update Property
         </h2>
@@ -74,8 +76,7 @@ const UpdatedReview = () => {
         <div className="backdrop-blur-sm rounded-lg bg-gray-800 bg-opacity-50 p-6 sm:p-8 md:p-12">
           <form
             onSubmit={handleUpdateProperty}
-            className="w-full max-w-screen-lg mx-auto space-y-6"
-          >
+            className="w-full max-w-screen-lg mx-auto space-y-6">
             {/* Property Name & Image */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
@@ -110,8 +111,7 @@ const UpdatedReview = () => {
                   name="category"
                   defaultValue={category}
                   className="bg-gray-900 text-gray-200 w-full p-3 rounded"
-                  required
-                >
+                  required>
                   <option value="">Select Category</option>
                   <option value="Rent">Rent</option>
                   <option value="Sale">Sale</option>
@@ -154,8 +154,7 @@ const UpdatedReview = () => {
                 rows="5"
                 placeholder="Enter description"
                 className="bg-gray-900 text-gray-200 w-full p-3 rounded"
-                required
-              ></textarea>
+                required></textarea>
             </div>
 
             {/* User Info */}

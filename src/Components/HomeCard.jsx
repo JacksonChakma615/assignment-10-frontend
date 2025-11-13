@@ -9,7 +9,7 @@ const HomeCard = ({ review }) => {
   const { image, name, description, rating, genres } = review;
 
   const handleAddWishList = (review) => {
-    fetch("http://localhost:5000/myRating", {
+    fetch("https://assignment-10-lac-ten.vercel.app/myRating", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,16 +74,14 @@ const HomeCard = ({ review }) => {
         <Link to={`/exploreDetails/${review._id}`}>
           <button
             id="my-anchor-element-id"
-            className="btn btn-sm rounded-xl px-4 py-1 bg-gray-900 text-white hover:bg-gray-800 transition duration-300 w-full"
-          >
-          See Details
+            className="btn btn-sm rounded-xl px-4 py-1 bg-gray-900 text-white hover:bg-gray-800 transition duration-300 w-full">
+            See Details
           </button>
         </Link>
         <Tooltip
           anchorSelect="#my-anchor-element-id"
           content="Click the button to see details"
         />
-     
       </div>
     </div>
   );

@@ -20,19 +20,22 @@ const ExploreDetails = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/myRating", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          propertyId: property?._id,
-          name: property?.propertyName,
-          description: property?.description,
-          image: property?.image,
-          rating: userRating,
-          reviewText: userReview,
-          email: user?.email,
-        }),
-      });
+      const res = await fetch(
+        "https://assignment-10-lac-ten.vercel.app/myRating",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            propertyId: property?._id,
+            name: property?.propertyName,
+            description: property?.description,
+            image: property?.image,
+            rating: userRating,
+            reviewText: userReview,
+            email: user?.email,
+          }),
+        }
+      );
 
       const data = await res.json();
 
@@ -54,11 +57,14 @@ const ExploreDetails = () => {
     }
   };
 
-  if (!property) return <p className="text-center mt-10">Loading property details...</p>;
+  if (!property)
+    return <p className="text-center mt-10">Loading property details...</p>;
 
   return (
     <div className="p-6 md:w-10/12 mx-auto">
-      <h2 className="text-3xl font-bold text-center py-4">{property?.propertyName}</h2>
+      <h2 className="text-3xl font-bold text-center py-4">
+        {property?.propertyName}
+      </h2>
 
       <div className="flex flex-col lg:flex-row gap-6 bg-base-200 rounded-xl shadow-xl p-6 items-start">
         <img
@@ -67,10 +73,21 @@ const ExploreDetails = () => {
           alt={property?.propertyName}
         />
         <div className="flex-1 space-y-3">
-          <h4><span className="font-semibold">Description: </span>{property?.description}</h4>
-          <h4><span className="font-semibold">Price: </span>${property?.price}</h4>
-          <h4><span className="font-semibold">Category: </span>{property?.category}</h4>
-          <h4><span className="font-semibold">Location: </span>{property?.location}</h4>
+          <h4>
+            <span className="font-semibold">Description: </span>
+            {property?.description}
+          </h4>
+          <h4>
+            <span className="font-semibold">Price: </span>${property?.price}
+          </h4>
+          <h4>
+            <span className="font-semibold">Category: </span>
+            {property?.category}
+          </h4>
+          <h4>
+            <span className="font-semibold">Location: </span>
+            {property?.location}
+          </h4>
         </div>
       </div>
 
@@ -83,8 +100,9 @@ const ExploreDetails = () => {
               key={i}
               type="button"
               onClick={() => setUserRating(i + 1)}
-              className={`text-2xl ${i < userRating ? "text-orange-500" : "text-gray-300"}`}
-            >
+              className={`text-2xl ${
+                i < userRating ? "text-orange-500" : "text-gray-300"
+              }`}>
               ★
             </button>
           ))}
@@ -100,8 +118,9 @@ const ExploreDetails = () => {
         <button
           onClick={handleAddRating}
           disabled={loading}
-          className={`btn rounded-full px-6 py-2 text-white bg-[#9538E2] ${loading ? "opacity-60 cursor-not-allowed" : ""}`}
-        >
+          className={`btn rounded-full px-6 py-2 text-white bg-[#9538E2] ${
+            loading ? "opacity-60 cursor-not-allowed" : ""
+          }`}>
           {loading ? "Submitting..." : "Submit Review"}
         </button>
       </div>

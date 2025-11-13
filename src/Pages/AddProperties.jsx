@@ -33,7 +33,7 @@ const AddProperties = () => {
     };
 
     // ✅ Send data to backend
-    fetch("http://localhost:5000/allProperties", {
+    fetch("https://assignment-10-lac-ten.vercel.app/allProperties", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newProperty),
@@ -65,8 +65,7 @@ const AddProperties = () => {
     <div className="mt-20">
       <div
         className="bg-cover bg-center p-4 sm:p-8 md:p-12 lg:p-24"
-        style={{ backgroundImage: `url(${banner})` }}
-      >
+        style={{ backgroundImage: `url(${banner})` }}>
         <h2 className="text-3xl md:text-4xl font-bold text-center my-5 text-white">
           Add Your Property
         </h2>
@@ -80,8 +79,7 @@ const AddProperties = () => {
         <div className="backdrop-blur-sm rounded-lg bg-gray-800 bg-opacity-50 p-6 sm:p-8 md:p-12">
           <form
             onSubmit={handleAddProperty}
-            className="w-full max-w-screen-lg mx-auto space-y-6"
-          >
+            className="w-full max-w-screen-lg mx-auto space-y-6">
             {/* Property Name & Image */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
@@ -126,8 +124,7 @@ const AddProperties = () => {
                 <select
                   name="category"
                   className="bg-gray-900 text-gray-200 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
-                  required
-                >
+                  required>
                   <option value="">Select Category</option>
                   <option value="Rent">Rent</option>
                   <option value="Sale">Sale</option>
@@ -180,8 +177,7 @@ const AddProperties = () => {
                 rows="5"
                 placeholder="Write about the property..."
                 className="bg-gray-900 text-gray-200 placeholder-gray-400 w-full p-3 rounded focus:ring-2 focus:ring-green-500"
-                required
-              ></textarea>
+                required></textarea>
             </div>
 
             {/* User Info (Read-only) */}

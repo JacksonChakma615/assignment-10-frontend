@@ -5,7 +5,7 @@ HomeNest is a modern real estate listing platform where property owners can post
 ---
 
 ## 🌐 Live Site
-[Visit HomeNest Live](https://your-client-live-site-url.com)
+[Visit HomeNest Live] https://zingy-parfait-cc6ead.netlify.app/ 
 
 ---
 
